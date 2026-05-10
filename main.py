@@ -203,7 +203,7 @@ def extract_matches_from_response(data):
     if not data:
         return matches
     
-    s
+    
     if isinstance(data, dict):
         
         if 'matchList' in data and data['matchList']:
