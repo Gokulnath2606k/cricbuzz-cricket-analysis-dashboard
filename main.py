@@ -1,8 +1,3 @@
-"""
-Cricbuzz LiveStats - PURE LIVE CRICKET DATA
-No demo data - Only real matches from Cricbuzz
-"""
-
 import streamlit as st
 import pandas as pd
 import sqlite3
@@ -356,20 +351,20 @@ elif page == "🎯 Live Matches":
     st.markdown("## 🔴 LIVE CRICKET MATCHES")
     st.caption("Real-time data from Cricbuzz | Refreshes every 30 seconds")
     
-    # Refresh button
+
     col1, col2 = st.columns([1, 5])
     with col1:
         if st.button("🔄 Refresh", use_container_width=True):
             st.cache_data.clear()
             st.rerun()
     
-    # Auto-refresh logic
+
     current_time = time.time()
     if current_time - st.session_state.last_refresh > 30:
         st.session_state.last_refresh = current_time
         st.rerun()
     
-    # Fetch live data
+
     with st.spinner("Fetching live cricket matches from Cricbuzz API..."):
         data = st.session_state.api.get_live_matches()
     
@@ -380,7 +375,7 @@ elif page == "🎯 Live Matches":
         if matches:
             st.success(f"✅ Found {len(matches)} live match(es)")
             
-            # Store in database
+
             conn = sqlite3.connect('cricbuzz_live.db')
             c = conn.cursor()
             
@@ -392,21 +387,20 @@ elif page == "🎯 Live Matches":
                 match_desc = match_info.get('matchDesc', 'N/A')
                 series_name = match_info.get('seriesName', 'N/A')
                 
-                # Team information
+   
                 team1 = match_info.get('team1', {}).get('teamName', 'Team 1')
                 team2 = match_info.get('team2', {}).get('teamName', 'Team 2')
                 
-                # Scores
+                
                 score1 = match.get('matchScore', {}).get('team1Score', {}).get('inngs1', {}).get('runs', '0')
                 overs1 = match.get('matchScore', {}).get('team1Score', {}).get('inngs1', {}).get('overs', '0')
                 score2 = match.get('matchScore', {}).get('team2Score', {}).get('inngs1', {}).get('runs', '0')
                 overs2 = match.get('matchScore', {}).get('team2Score', {}).get('inngs1', {}).get('overs', '0')
                 
-                # Format scores
+                
                 score1_display = f"{score1}/{match.get('matchScore', {}).get('team1Score', {}).get('inngs1', {}).get('wickets', '0')} ({overs1} ov)" if score1 != '0' else "Yet to bat"
                 score2_display = f"{score2}/{match.get('matchScore', {}).get('team2Score', {}).get('inngs1', {}).get('wickets', '0')} ({overs2} ov)" if score2 != '0' else "Yet to bat"
                 
-                # Venue and status
                 venue = match_info.get('venueInfo', {}).get('ground', 'Venue TBD')
                 status = match_info.get('status', 'Live')
                 match_type = match_info.get('matchFormat', 'International')
