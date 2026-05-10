@@ -4,6 +4,9 @@ A real-time cricket analytics dashboard built using Streamlit, Python, SQL, and 
 
 This project provides live cricket match insights, player statistics, database analytics, and interactive visual dashboards for cricket fans and data analysts.
 
+
+Live Dashboard ; http://localhost:8501/
+
 ---
 
 # 🚀 Features
